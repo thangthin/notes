@@ -2,7 +2,7 @@ You made it all this way - congrats on getting this far! Seriously! Learning Git
 
 Take a look at this output from running git log:
 
-![git log output](ud123-I3-git-log-output.png)
+![git log output](ud123-l3-git-log-output.png)
 
 We've been looking closely at all the detailed information that ```git log``` displays. But now, take a step back and look at all of the information as a whole.
 
@@ -22,3 +22,19 @@ $ git log --oneline
 Check out how different the output is!
 ![git log vs git log --oneline](ud123-l3-git-log-vs-git-log-oneline.png)
 
+We just looked at the --oneline flag to show one commit per line. That's great for getting an overview of the repository. But what if we want to dig in a little to see what file or files were changed by a commit?
+
+# git log --stat Intro
+The ```git log``` command has a flag that can be used to display the files that have been changed in the commit, as well as the number of lines that have been added or deleted. The flag is ```--stat``` ("stat" is short for "statistics"):
+
+```
+$ git log --stat
+```
+Run this command and check out what it displays.
+![git log stat](ud123-l3-git-log-vs-git-log-stat.png)
+
+This command:
+
+- displays the file(s) that have been modified
+- displays the number of lines that have been added/removed
+- displays a summary line with the total number of modified files and lines that have been added/removed
