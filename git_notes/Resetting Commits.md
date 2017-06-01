@@ -61,3 +61,55 @@ Let's look at how we'd refer to some of the previous commits. Since HEAD points 
 - HEAD~3 is also the 0c5975a commit
 - HEAD^^^2 is the 4c9749e commit (this is the grandparent's (HEAD^^) second parent (^2))
 
+# Which Commit?
+Use this repository to answer the following quiz questions:
+```
+* 9ec05ca (HEAD -> master) Revert "Set page heading to "Quests & Crusades""
+* db7e87a Set page heading to "Quests & Crusades"
+*   796ddb0 Merge branch 'heading-update'
+|\  
+| * 4c9749e (heading-update) Set page heading to "Crusade"
+* | 0c5975a Set page heading to "Quest"
+|/  
+*   1a56a81 Merge branch 'sidebar'
+|\  
+| * f69811c (sidebar) Update sidebar with favorite movie
+| * e6c65a6 Add new sidebar content
+* | e014d91 (footer) Add links to social media
+* | 209752a Improve site heading for SEO
+* | 3772ab1 Set background color for page
+|/  
+* 5bfe5e7 Add starting HTML structure
+* 6fa5f34 Add .gitignore file
+* a879849 Add header to blog
+* 94de470 Initial commit
+```
+
+> Which commit is referenced by HEAD~6?
+> 2097521
+
+>You did so well on that last one, why not give this one a go! Using the same repository, which commit is referenced by HEAD~4^2?
+> f69811c
+
+# The git reset Command
+The git reset command is used to reset (erase) commits:
+
+```
+$ git reset <reference-to-commit>
+```
+It can be used to:
+- move the HEAD and current branch pointer to the referenced commit
+- erase commits
+- move committed changes to the staging index
+- unstage committed changes
+
+# Git Reset's Flags
+The way that Git determines if it erases, stages previously committed changes, or unstages previously committed changes is by the flag that's used. The flags are:
+
+- --mixed
+- --soft
+- --hard
+
+It's easier to understand how they work with a little animation.
+
+[![reset animation](http://img.youtube.com/vi/UN7ki2G2yKc/0.jpg)](https://youtu.be/UN7ki2G2yKc)
