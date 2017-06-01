@@ -11,3 +11,14 @@ Since the SHA of the most-recent commit is ```db7e87a```, to revert it: I'll jus
 
 I'll get the following output:
 ![result](ud123-l6-git-revert-post.png)
+
+Did you see how the output of the git revert command tells us what it reverted? It uses the commit message of the commit that I told it to revert. Something that's also important is that it creates a new commit.
+
+# Revert Recap
+To recap, the ```git revert``` command is used to reverse a previously made commit:
+
+```$ git revert <SHA-of-commit-to-revert>```
+This command:
+
+will undo the changes that were made by the provided commit
+creates a new commit to record the change
