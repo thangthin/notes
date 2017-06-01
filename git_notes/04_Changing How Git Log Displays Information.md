@@ -38,3 +38,40 @@ This command:
 - displays the file(s) that have been modified
 - displays the number of lines that have been added/removed
 - displays a summary line with the total number of modified files and lines that have been added/removed
+
+# Viewing Changes
+We know that ```git log``` will show us the commits in a repository, and if we add the ```--stat``` flag, we can see what files were modified and how many lines of code were added or removed. Wouldn't it be awesome if we could see exactly what those changes were?
+
+If this isn't the best part of a version control system, I don't know what is! Being able to see the exact changes that were made to a file is incredibly important! Being able to say, "oh, ok, so this commit adds 5 pixels of border-radius to the button!".
+
+For example, in the blog project, the commit ```a3dc99a``` has the message "center content on page" and modifies the CSS file by adding 5 lines. What are those five lines that were added? How can we figure out what those 5 lines are?
+![git log stat animation](ud123-l3-git-log-stat.gif)
+
+# git log -p
+The ```git log``` command has a flag that can be used to display the actual changes made to a file. The flag is ```--patch``` which can be shortened to just ```-p```:
+```
+$ git log -p
+```
+Run this command and check out what it displays.
+![git log --patch](ud123-l3-git-log-p.png)
+
+# Annotated git log -p Output
+![git log -p described](ud123-l3-git-log-p-lines-removed-annotated.png)
+Using the image above, let's do a quick recap of the git log -p output:
+
+- 🔵 - the file that is being displayed
+- 🔶 - the hash of the first version of the file and the hash of the second version of the file
+    - not usually important, so it's safe to ignore
+- ❤️ - the old version and current version of the file
+- 🔍 - the lines where the file is added and how many lines there are
+    - -15,83 indicates that the old version (represented by the -) started at line 15 and that the file had 83 lines
+    - +15,85 indicates that the current version (represented by the +) starts at line 15 and that there are now 85 lines...these 85 lines are shown in the patch below
+- ✏️ - the actual changes made in the commit
+    - lines that are red and start with a minus (-) were in the original version of the file but have been removed by the commit
+    - lines that are green and start with a plus (+) are new lines that have been added in the commit
+
+This command adds the following to the default output:
+
+- displays the files that have been modified
+- displays the location of the lines that have been added/removed
+- displays the actual changes that have been made
