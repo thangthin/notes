@@ -75,3 +75,46 @@ This command adds the following to the default output:
 - displays the files that have been modified
 - displays the location of the lines that have been added/removed
 - displays the actual changes that have been made
+
+# Too Much Scrolling
+The last few quizzes in the previous section had you scrolling and scrolling through the patch output just to get to the right commit so you could see its info. Wouldn't it be super handy if you could just display a specific commit's details without worrying about all of the others in the repo?
+
+There are actually two ways to do this!
+
+providing the SHA of the commit you want to see to ```git log```
+use a new command ```git show```
+They're both pretty simple, but let's look at the ```git log``` way and then we'll look at ```git show```.
+You already know how to "log" information with:
+
+- git log
+- git log --oneline
+- git log --stat
+- git log -p
+But did you know, you can supply the SHA of a commit as the final argument for all of these commands? For example:
+```
+$ git log -p fdf5493
+```
+By supplying a SHA, the ```git log -p``` command will start at that commit! No need to scroll through everything! Keep in mind that it will also show all of the commits that were made prior to the supplied SHA.
+
+# New Command: git show
+The other command that shows a specific commit is ```git show```:
+```
+$ git show
+```
+Running it like the example above will only display the most recent commit. Typically, a SHA is provided as a final argument:
+```
+$ git show fdf5493
+```
+## What does git show do?
+The ```git show``` command will show only one commit. So don't get alarmed when you can't find any other commits - it only shows one. The output of the ```git show``` command is exactly the same as the ```git log -p``` command. So by default, ```git show``` displays:
+
+- the commit
+- the author
+- the date
+- the commit message
+- the patch information
+However, ```git show``` can be combined with most of the other flags we've looked at:
+
+```--stat``` - to show the how many files were changed and the number of lines that were added/removed
+```-p``` or ```--patch``` - this the default, but if ```--stat``` is used, the patch won't display, so pass -p to add it again
+```-w``` - to ignore changes to whitespace
