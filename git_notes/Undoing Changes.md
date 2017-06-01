@@ -12,8 +12,9 @@ Alternatively, ```<span style="color:blue">git commit --amend</span>``` will let
 
 Instead, you can amend the last commit (the one that updated the color of all of the other links) to include this forgotten one. To do get the forgotten link included, just:
 
-edit the file(s)
-save the file(s)
-stage the file(s)
-and run ```git commit --amend```
+1. edit the file(s)
+2. save the file(s)
+3. stage the file(s)
+4. and run ```git commit --amend```
+
 So you'd make changes to the necessary CSS and/or HTML files to get the forgotten link styled correctly, then you'd save all of the files that were modified, then you'd use ```git add``` to stage all of the modified files (just as if you were going to make a new commit!), but then you'd run ```git commit --amend``` to update the most-recent commit instead of creating a new one.
