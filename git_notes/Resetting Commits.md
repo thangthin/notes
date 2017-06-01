@@ -113,3 +113,23 @@ The way that Git determines if it erases, stages previously committed changes, o
 It's easier to understand how they work with a little animation.
 
 [![reset animation](http://img.youtube.com/vi/UN7ki2G2yKc/0.jpg)](https://youtu.be/UN7ki2G2yKc)
+
+# :bulb: Backup Branch :bulb:
+Remember that using the ```git reset``` command will erase commits from the current branch. So if you want to follow along with all the resetting stuff that's coming up, you'll need to create a branch on the current commit that you can use as a ```backup```.
+
+Before I do any resetting, I usually create a backup branch on the most-recent commit so that I can get back to the commits if I make a mistake:
+
+```
+$ git branch backup
+```
+
+# Reset's --mixed Flag
+Let's look at each one of these flags.
+```
+* 9ec05ca (HEAD -> master) Revert "Set page heading to "Quests & Crusades""
+* db7e87a Set page heading to "Quests & Crusades"
+* 796ddb0 Merge branch 'heading-update'
+```
+Using the sample repo above with HEAD pointing to master on commit 9ec05ca, running git reset --mixed HEAD^ will take the changes made in commit 9ec05ca and move them to the working directory.
+
+![mixed flag](ud123-l6-git-revert-mixed.png "mixed flag")
