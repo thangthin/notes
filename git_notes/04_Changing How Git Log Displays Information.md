@@ -2,7 +2,7 @@ You made it all this way - congrats on getting this far! Seriously! Learning Git
 
 Take a look at this output from running git log:
 
-![git log output](ud123-l3-git-log-output.png)
+![git log output](git_img/ud123-l3-git-log-output.png)
 
 We've been looking closely at all the detailed information that ```git log``` displays. But now, take a step back and look at all of the information as a whole.
 
@@ -20,7 +20,7 @@ The git log command has a flag that can be used to alter how it displays the rep
 $ git log --oneline
 ```
 Check out how different the output is!
-![git log vs git log --oneline](ud123-l3-git-log-vs-git-log-oneline.png)
+![git log vs git log --oneline](git_img/ud123-l3-git-log-vs-git-log-oneline.png)
 
 We just looked at the --oneline flag to show one commit per line. That's great for getting an overview of the repository. But what if we want to dig in a little to see what file or files were changed by a commit?
 
@@ -31,7 +31,7 @@ The ```git log``` command has a flag that can be used to display the files that 
 $ git log --stat
 ```
 Run this command and check out what it displays.
-![git log stat](ud123-l3-git-log-vs-git-log-stat.png)
+![git log stat](git_img/ud123-l3-git-log-vs-git-log-stat.png)
 
 This command:
 
@@ -45,7 +45,7 @@ We know that ```git log``` will show us the commits in a repository, and if we a
 If this isn't the best part of a version control system, I don't know what is! Being able to see the exact changes that were made to a file is incredibly important! Being able to say, "oh, ok, so this commit adds 5 pixels of border-radius to the button!".
 
 For example, in the blog project, the commit ```a3dc99a``` has the message "center content on page" and modifies the CSS file by adding 5 lines. What are those five lines that were added? How can we figure out what those 5 lines are?
-![git log stat animation](ud123-l3-git-log-stat.gif)
+![git log stat animation](git_img/ud123-l3-git-log-stat.gif)
 
 # git log -p
 The ```git log``` command has a flag that can be used to display the actual changes made to a file. The flag is ```--patch``` which can be shortened to just ```-p```:
@@ -53,10 +53,10 @@ The ```git log``` command has a flag that can be used to display the actual chan
 $ git log -p
 ```
 Run this command and check out what it displays.
-![git log --patch](ud123-l3-git-log-p.png)
+![git log --patch](git_img/ud123-l3-git-log-p.png)
 
 # Annotated git log -p Output
-![git log -p described](ud123-l3-git-log-p-lines-removed-annotated.png)
+![git log -p described](git_img/ud123-l3-git-log-p-lines-removed-annotated.png)
 Using the image above, let's do a quick recap of the git log -p output:
 
 - 🔵 - the file that is being displayed

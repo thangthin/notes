@@ -23,14 +23,14 @@ If you're a copy/paster like me, just run this command on the terminal - ```mkdi
 
 If you're all set, then your terminal should be "inside" the ```new-git-project``` directory and look like this:
 
-![new git init project](ud123-l2-new-git-project.png "new git init project")
+![new git init project](git_img/ud123-l2-new-git-project.png "new git init project")
 
 # Git Init
 Fantastic work - we're all set up and ready to start using the ```git init``` command!
 
 This is one of the easiest commands to run. All you have to do is run ```git init``` on the terminal. That's it! Go ahead, why not give it a try right now!
 
-![animation of git init](ud123-l2-git-init.gif "animation of git init")
+![animation of git init](git_img/ud123-l2-git-init.gif "animation of git init")
 
 # Git Init's Effect
 Running the ```git init``` command sets up all of the necessary files and directories that Git will use to keep track of everything. All of these files are stored in a directory called ```.git``` (notice the . at the beginning - that means it'll be a hidden directory on Mac/Linux). This ```.git``` directory is the "repo"! This is where git records all of the commits and keeps track of everything!
@@ -39,7 +39,7 @@ Let's take a brief look at the contents of the ```.git``` directory.
 
 > WARNING: Don't directly edit any files inside the ```.git``` directory. This is the heart of the repository. If you change file names and/or file content, git will probably lose track of the files that you're keeping in the repo, and you could lose a lot of work! It's okay to look at those files though, but don't edit or delete them.
 
-![.git directory](ud123-l2-.git-directory.png ".git directory")
+![.git directory](git_img/ud123-l2-.git-directory.png ".git directory")
 
 # .Git Directory Contents
 We're about to take a look at the .git directory...it's not vital for this course, though, so don't worry about memorizing anything, it's here if you want to dig a little deeper into how Git works under the hood.

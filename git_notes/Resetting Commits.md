@@ -132,7 +132,7 @@ Let's look at each one of these flags.
 ```
 Using the sample repo above with ```HEAD``` pointing to ```master``` on commit ```9ec05ca```, running ```git reset --mixed HEAD^``` will take the changes made in commit ```9ec05ca``` and move them to the working directory.
 
-![mixed flag](ud123-l6-git-revert-mixed.png "mixed flag")
+![mixed flag](git_img/ud123-l6-git-revert-mixed.png "mixed flag")
 
 > # 💡 Back To Normal 💡
 > If you created the backup branch prior to resetting anything, then you can easily get back to having the master branch point to the same commit as the backup branch. You'll just need to:

@@ -4,7 +4,7 @@ Finding the answers to these questions is exactly what ```git log``` can do for 
 $ git log
 ```
 The terminal should display the following screen.
-![git log output](ud123-l3-git-log-output.png "git log output")
+![git log output](git_img/ud123-l3-git-log-output.png "git log output")
 
 # Navigating The Log
 If you're not used to a pager on the command line, navigating in ```Less``` can be a bit odd. Here are some helpful keys:

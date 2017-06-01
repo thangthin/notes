@@ -10,7 +10,7 @@ Now that I've made a commit with some changes, I can revert it with the ```git r
 Since the SHA of the most-recent commit is ```db7e87a```, to revert it: I'll just run ```git revert db7e87a``` (this will pop open my code editor to edit/accept the provided commit message)
 
 I'll get the following output:
-![result](ud123-l6-git-revert-post.png)
+![result](git_img/ud123-l6-git-revert-post.png)
 
 Did you see how the output of the git revert command tells us what it reverted? It uses the commit message of the commit that I told it to revert. Something that's also important is that it creates a new commit.
 
