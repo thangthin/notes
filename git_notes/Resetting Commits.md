@@ -130,6 +130,40 @@ Let's look at each one of these flags.
 * db7e87a Set page heading to "Quests & Crusades"
 * 796ddb0 Merge branch 'heading-update'
 ```
-Using the sample repo above with HEAD pointing to master on commit 9ec05ca, running git reset --mixed HEAD^ will take the changes made in commit 9ec05ca and move them to the working directory.
+Using the sample repo above with ```HEAD``` pointing to ```master``` on commit ```9ec05ca```, running ```git reset --mixed HEAD^``` will take the changes made in commit ```9ec05ca``` and move them to the working directory.
 
 ![mixed flag](ud123-l6-git-revert-mixed.png "mixed flag")
+
+> # 💡 Back To Normal 💡
+> If you created the backup branch prior to resetting anything, then you can easily get back to having the master branch point to the same commit as the backup branch. You'll just need to:
+
+> remove the uncommitted changes from the working directory
+> merge backup into master (which will cause a Fast-forward merge and move master up to the same point as backup)
+> ```$ git checkout -- index.html```
+> ```$ git merge backup```
+
+# Reset's --hard Flag
+Last but not least, let's look at the ```--hard``` flag:
+```
+* 9ec05ca (HEAD -> master) Revert "Set page heading to "Quests & Crusades""
+* db7e87a Set page heading to "Quests & Crusades"
+* 796ddb0 Merge branch 'heading-update'
+```
+Running ```git reset --hard HEAD^``` will take the changes made in commit 9ec05ca and erases them.
+
+# Reset Recap
+To recap, the git reset command is used erase commits:
+```
+$ git reset <reference-to-commit>
+```
+It can be used to:
+
+- move the HEAD and current branch pointer to the referenced commit
+- erase commits with the ```--hard``` flag
+- moves committed changes to the staging index with the ```--soft``` flag
+- unstages committed changes ```--mixed``` flag
+
+Typically, ancestry references are used to indicate previous commits. The ancestry references are:
+
+- ```^``` – indicates the parent commit
+- ```~``` – indicates the first parent commit
