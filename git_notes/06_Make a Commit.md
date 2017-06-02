@@ -96,3 +96,34 @@ Inside the code editor:
 - close the editor to make the commit
 
 Then, use git log to review the commit you just made!
+
+# Good Commit Messages
+Let's take a quick stroll down Stickler Lane and ask the question:
+
+> How do I write a good commit message? And why should I care?
+These are a fantastic questions! I can't stress enough how important it is to spend some time writing a good commit message.
+
+Now, what makes a "good" commit message? That's a great question and has been written about a number of times. Here are some important things to think about when crafting a good commit message:
+
+**Do**
+
+- do keep the message short (less than 60-ish characters)
+- do explain what the commit does (not how or why!)
+**Do not**
+
+- do not explain why the changes are made (more on this below)
+- do not explain how the changes are made (that's what git log -p is for!)
+- do not use the word "and"
+    - if you have to use "and", your commit message is probably doing too many changes - break the changes into separate commits
+    - e.g. "make the background color pink and increase the size of the sidebar"
+The best way that I've found to come up with a commit message is to finish this phrase, "This commit will...". However, you finish that phrase, use that as your commit message.
+
+Above all, **be consistent** in how you write your commit messages!
+
+# Explain the Why
+If you need to explain why a commit needs to be made, you can!
+
+When you're writing the commit message, the first line is the message itself. After the message, leave a blank line, and then type out the body or explanation including details about why the commit is needed (e.g. URL links).
+
+Here's what a commit message edit screen might look like:
+![body message of commit](git_img/ud123-l4-git-commit-details-section.png)
