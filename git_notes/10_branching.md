@@ -62,3 +62,17 @@ $ git branch -d sidebar
 One thing to note is that you can't delete a branch that you're currently on. So to delete the ```sidebar``` branch, you'd have to switch to either the ```master``` branch or create and switch to a new branch.
 
 Deleting something can be quite nerve-wracking. Don't worry, though. Git won't let you delete a branch if it has commits on it that aren't on any other branch (meaning the commits are unique to the branch that's about to be deleted). If you created the ```sidebar``` branch, added commits to it, and then tried to delete it with the ```git branch -d sidebar```, Git wouldn't let you delete the branch because you can't delete a branch that you're currently on. If you switched to the ```master``` branch and tried to delete the ```sidebar``` branch, Git also wouldn't let you do that because those new commits on the sidebar branch would be lost! To force deletion, you need to use a capital ```D``` flag - ```git branch -D sidebar```.
+
+# See All Branches At Once
+We've made it to the end of all the changes we needed to make! Awesome job!
+
+Now we have multiple sets of changes on three different branches. We can't see other branches unless in the ```git log``` output unless we switch to a branch. Wouldn't it be nice if we could see all branches at once in the ```git log``` output.
+
+As you've hopefully learned by now, the git log command is pretty powerful and can show us this information. We'll use the new ```--graph``` and ```--all``` flags:
+```
+$ git log --oneline --decorate --graph --all
+```
+The ```--graph``` flag adds the bullets and lines to the leftmost part of the output. This shows the actual branching that's happening. The ```--all``` flag is what displays all of the branches in the repository.
+
+Running this command will show all branches and commits in the repository:
+![git log oneline graph all](git_img/ud123-l5-git-log-graph-all.png)
