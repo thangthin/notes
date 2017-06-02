@@ -43,6 +43,22 @@ $ git merge footer
 This is what my Terminal displays after running the command:
 ![git merge fast forward](git_img/ud123-l5-merge-fast-forward.gif)
 
+# Perform A Regular Merge
+Fantastic work doing a Fast-forward merge! That wasn't too hard, was it?
+
+But you might say - "Of course that was easy, all of the commits are already there and the branch pointer just moved forward!"...and you'd be right. It's the simplest of merges.
+
+So let's do the more common kind of merge where two divergent branches are combined. You'll be surprised that to merge in a divergent branch like sidebar is actually no different!
+
+To merge in the sidebar branch, make sure you're on the master branch and run:
+```
+$ git merge sidebar
+```
+Because this combines two divergent branches, a commit is going to be made. And when a commit is made, a commit message needs to be supplied. Since this is a merge commit a default message is already supplied. You can change the message if you want, but it's common practice to use the default merge commit message. So when your code editor opens with the message, just close it again and accept that commit message.
+
+This is what my Terminal shows after using the default commit message:
+![merge sidebar](git_img/ud123-l5-git-merge-sidebar.png)
+
 # Merge Recap
 To recap, the ```git merge``` command is used to combine branches in Git:
 ```
