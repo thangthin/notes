@@ -179,3 +179,93 @@ $ git fetch origin master
 
 # Git Fork
 Forking is a service provided by git hosting sites to let you to copy another developer's repository and do modification on it as if its your own. When we fork a repository, we're just copying the original repository and saving it under our account. The hosting site automatically keeps a reference to the original repo.
+
+# Pull Request
+A **pull request** is a request to the original or source repository's maintainer to include changes in their project that you made in your fork of their project. You are requesting that they pull in changes you've made.
+
+A pull request is a request for the source repository to pull in your commits and merge them with their project. To create a pull request, a couple of things need to happen:
+
+- you must fork the source repository
+- clone your fork down to your machine
+- make some commits (ideally on a topic branch!)
+- push the commits back to your fork
+- create a new pull request and choose the branch that has your new commits
+
+While you're working on a topic branch of changes that you want to make to a repository, that repository will probably be receiving updates of its own from the original authors.
+
+## Stars & Watching
+If you want to keep up-to-date with the Repository, GitHub offers a convenient way to keep track of repositories - it lets you star repositories:
+
+You can go to [https://github.com/stars](https://github.com/stars) to list out and filter all of the repositories that you have starred.
+
+Starring is helpful if you want to keep track of certain repositories. But it's not entirely helpful if you need to actively keep up with a repositories development because you have to manually go to the stars page to view the repositories and see if they've changed.
+
+## Watching A Repository
+If you need to keep up with a project's changes and want to be notified of when things change, GitHub offers a "Watch" feature:
+
+If you're working on a repository quite often, then I'd suggest setting the watch setting to "Watching". This way GitHub will notify you whenever anything happens with the repository like people pushing changes to the repository, new issues being created, or comments being added to existing issues.
+
+## Including Upstream Changes
+Now that you know about watching your repository let say that you're watching it and you get notified that some commits have been pushed to the original, source repository. How do you go about getting those changes into your fork of the repository? If you want to keep doing development on your fork then you'd need your fork to stay in sync with the source repository as much as possible.
+
+Let's see how we can get these changes from the remote repository into our repository.
+
+Incase Lam starts making changes to her project that I won't have in my fork of her project, I'll add her project as an additional remote so that I can stay in sync with her.
+
+In my local repository, I already have one remote repository which is ```origin``` remote.
+
+![git remote with only origin](git_img/ud456-l3-03-git-remotes-origin.png)
+
+Remember that the word ```origin``` is just the default name that's used when you ```git clone``` a remote repository for the first time. We're going to use the git remote command to add a new **shortname** and URL to this list. This will give us a connection to the source repository.
+```
+$ git remote add upstream https://github.com/udacity/course-collaboration-travel-plans.git
+```
+Notice that I've used the name ```upstream``` as the shortname to reference the source repository. As with the ```origin``` shortname, the word ```upstream``` here is not special in any way; It's just a regular word. This could have been any word... like the word "banana". But the word "upstream" is typically used to refer to the source repository.
+
+Let's check out what the list of remotes looks like now after adding this new remote:
+
+![git rmeote after adding upstream](git_img/ud456-l3-03-add-upstream-remote.png)
+
+## Origin vs Upstream Clarification
+One thing that can be a tiny bit confusing right now is the difference between the ```origin``` and ```upstream```. What might be confusing is that origin does not refer to the source repository (also known as the "original" repository) that we forked from. Instead, it's pointing to our forked repository. So even though it has the word ```origin``` is not actually the original repository.
+
+Remember that the names ```origin``` and ```upstream``` are just the default or de facto names that are used. If it's clearer for you to name your ```origin``` remote ```mine``` and the ```upstream``` remote ```source-repo```, then by all means, go ahead and rename them. What you name your remote repositories in your local repository does not affect the source repository at all.
+
+> ## ⚠️ Resetting Remote Names ⚠️
+> The image above demos the renaming of the remotes, but I have returned them to their default/defacto names of origin and upstream with the following commands:
+> ```
+> $ git remote rename mine origin
+> $ git remote rename source-repo upstream
+> ```
+
+## Pulling Upstream Changes
+Now to get the changes from ```upstream``` remote repository, all we have to do is run a ```git pull``` and use the ```upstream``` shortname rather than the ```origin``` shortname:
+```
+$ git pull upstream master
+```
+
+To get all upstream commits without automatically merging
+```
+# get all upstream commits onto upstream/master
+$ git fetch upstream master
+# to make sure I'm on the correct branch for merging
+$ git checkout master
+
+# merge in Lam's changes
+$ git merge upstream/master
+
+# send Lam's changes to *my* remote
+$ git push origin master
+```
+## Recap
+When working with a project that you've forked. The original project's maintainer will continue adding changes to their project. You'll want to keep your fork of their project in sync with theirs so that you can include any changes they make.
+
+To get commits from a source repository into your forked repository on GitHub you need to:
+
+- get the cloneable URL of the source repository
+- create a new remote with the git remote add command
+   - use the shortname upstream to point to the source repository
+   - provide the URL of the source repository
+- fetch the new upstream remote
+- merge the upstream's branch into a local branch
+- push the newly updated local branch to your origin repo
