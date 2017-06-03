@@ -43,3 +43,49 @@ or we can keep track the branches separately on the remote repository as well.
 Why would you want to have multiple remote repositories? We'll look at this later but briefly, if you are working with multiple developers then you might want to get changes they're working on in their branch(es) into your project before they merge them into the master branch. You might want to do this if you want to test out their change before you decide to implement your changes.
 
 Another example is if you have a project whose code is hosted on Github but deploys via Git to Heroku. You would have one remote for the ```master``` and one for the ```deployment```.
+
+# The Git Remote Command
+The git remote command will let you manage and interact with remote repositories.
+```
+$ git remote
+```
+Try running this command on a local repository that you haven't shared with anyone yet. What do you get?
+![git remote](git_img/ud456-l1-git-remote-no-remote.png)
+
+If you haven't configured a remote repository then this command will display nothing. One caveat to this is if you have cloned a repository. If you have, then your repository will automatically have a remote because it was cloned from the repository at the URL you provided. Let's look at a repository that has been cloned.
+![git remote of cloned repo](git_img/ud456-l1-git-remote-shortname.png)
+
+## Remote Shortnames
+The output of ```git remote``` is just the word ```origin```. Well that's weird. The word "origin", here, is referred to as a "shortname". A shortname is just a short and easy way to refer to the location of the remote repository. A shortname is local to the current repository (as in, your local repository). The word "origin" is the defacto name that's used to refer to the main remote repository. It's possible to rename this to something else, but typically it's left as "origin".
+
+Why do we care about how easy it is to refer to a remote repositories location? Well as you'll soon find out we'll be needing the path to the remote repository in a lot of our commands. And it's a lot easier to use just a name rather than the entire path to the remote repository.
+
+For example which one of these is easier to understand:
+
+- Head north for about a quarter of a mile, then turn left, go straight down that road for about 5 miles, then turn right, proceed straight for about 300 feet until you past the blue mailbox, turn left down Jack Street, go 50 feet then turn left again on Owen Road, that will curve around until you hit Finn Lane. The structure that's the third one on the left
+- Grandma's house
+You can see that it's a lot easier to refer to a location by just a short name like Grandma's house rather than the entire way to get there from your current location 😉
+
+If you want to see the full path to the remote repository, then all you have to do is use the ```-v``` flag:
+![git remote -v](git_img/ud456-l1-git-remote-from-clone.png)
+The Terminal application running the ```git remote``` command. The output includes the shortname and the full URL that it refers to.
+Here you can see that if the word ```origin``` is used, what actually is used is the path to ```https://github.com/GoogleChrome/lighthouse.git```. It also might seem a little bit odd that there are now two remotes both of them "origin" and both going to the same URL. The only difference is right at the end: the (fetch) part and the (push) part
+
+We'll be looking at both fetch and push in upcoming sections.
+
+## Adding a remote repo to an existing repo
+```
+$ git remote add origin <url to your remote repo>
+```
+
+```git remote add``` was used to create a **shortname** of ```origin``` that points to the project on GitHub. Running ```git remote -v``` displays both the shortname and the URL.
+
+## Recap
+A remote repository is a repository that's just like the one you're using but it's just stored at a different location. To manage a remote repository, use the ```git remote``` command:
+```
+$ git remote
+```
+- It's possible to have links to multiple different remote repositories.
+- A shortname is the name that's used to refer to a remote repository's location. Typically the location is a URL, but it could be a file path on the same computer.
+- ```git remote add``` is used to add a connection to a new remote repository.
+- ```git remote -v``` is used to see the details about a connection to a remote.
