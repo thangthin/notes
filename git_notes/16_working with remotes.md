@@ -270,3 +270,71 @@ To get commits from a source repository into your forked repository on GitHub yo
 - fetch the new upstream remote
 - merge the upstream's branch into a local branch
 - push the newly updated local branch to your origin repo
+
+# Squashing commits for pull request
+
+To squash commits together, we're going to use the extremely powerful ```git rebase``` command. This is one of my favorite commands, but it did take me quite a while to become comfortable with it. At first, it was somewhat challenging for me to get a handle on how it works, and then (after reading countless warnings online) I was scared to actually use it for fear of irreparably damaging my project's Git history.
+
+But I'm here to tell you that ```git rebase``` isn't really all that difficult, and that you can bravely make changes to your repository without fear of doing any damage! (<-- quite the claim, isn't it!?!)
+
+Let's first get a big picture idea of how squashing works, and then we'll actually do some squashing with the ```git rebase``` command.
+
+[![git rebase command explained](http://img.youtube.com/vi/H5JqcdIB5y0/0.jpg)](https://youtu.be/H5JqcdIB5y0)
+```
+$ git rebase -i HEAD~3
+```
+
+Say we have the last few commits as minor and related commits for a bigger feature. ```HEAD``` is a pointer to the current position in the repo, we can first create a backup branch 
+```
+$ git branch backup
+```
+This will have all of our commits
+If we want to group the last 3 commits together, while we're still on master branch
+```
+$ git rebase -i HEAD~3
+```
+This squashes the last 3 commit into 1 and create a new sha/commit and point move ```master``` to it.
+
+The ```-i``` in the command stands for "interactive". You can perform a rebase in a non-interactive mode. While you're learning how to rebase, though, I definitely recommend that you do interactive rebasing.
+[![git rebase interactive explained](http://img.youtube.com/vi/cL6ehKtJLUM/0.jpg)](https://youtu.be/cL6ehKtJLUM)
+
+After rebasing, our local commit will be different than remote commits history. Therefore if we try to do a simple push, git will reject it.
+
+We'll need to use the force flag
+```
+$ git push -f origin master
+```
+
+## Rebase Commands
+Let's take another look at the different commands that you can do with ```git rebase```:
+
+- use p or pick – to keep the commit as is
+- use r or reword – to keep the commit's content but alter the commit message
+- use e or edit – to keep the commit's content but stop before committing so that you can:
+  - add new content or files
+  - remove content or files
+  - alter the content that was going to be committed
+- use s or squash – to combine this commit's changes into the previous commit (the commit above it in the list)
+- use f or fixup – to combine this commit's change into the previous one but drop the commit message
+- use x or exec – to run a shell command
+- use d or drop – to delete the commit
+
+## When to rebase
+As you've seen, the ```git rebase``` command is incredibly powerful. It can help you edit commit messages, reorder commits, combine commits, etc. So it truly is a powerhouse of a tool. Now the question becomes "When should you rebase?".
+
+Whenever you rebase commits, Git will create a new SHA for each commit! This has drastic implications. To Git, the SHA is the identifier for a commit, so a different identifier means it's a different commit, regardless if the content has changed at all.
+
+So you should not rebase if you have already pushed the commits you want to rebase. If you're collaborating with other developers, then they might already be working with the commits you've pushed. If you then use ```git rebase``` to change things around and then force push the commits, then the other developers will now be out of sync with the remote repository. They will have to do some complicated surgery to their Git repository to get their repo back in a working state...and it might not even be possible for them to do that; they might just have to scrap all of their work and start over with your newly-rebased, force-pushed commits.
+
+## Recap
+The git rebase command is used to do a great many things.
+```
+# interactive rebase
+$ git rebase -i <base>
+
+# interactively rebase the commits to the one that's 3 before the one we're on
+$ git rebase -i HEAD~3
+```
+Inside the interactive list of commits, all commits start out as ```pick```, but you can swap that out with one of the other commands (```reword```, ```edit```, ```squash```, ```fixup```, ```exec```, and ```drop```).
+
+I recommend that you create a ```backup``` branch before rebasing, so that it's easy to return to your previous state. If you're happy with the rebase, then you can just delete the ```backup``` branch!
