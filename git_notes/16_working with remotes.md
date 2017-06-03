@@ -248,6 +248,7 @@ To get all upstream commits without automatically merging
 ```
 # get all upstream commits onto upstream/master
 $ git fetch upstream master
+
 # to make sure I'm on the correct branch for merging
 $ git checkout master
 
