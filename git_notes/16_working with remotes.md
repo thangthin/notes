@@ -176,3 +176,6 @@ The ```git fetch``` command is just the first step. It just retrieves the commit
 ```
 $ git fetch origin master
 ```
+
+# Git Fork
+Forking is a service provided by git hosting sites to let you to copy another developer's repository and do modification on it as if its your own. When we fork a repository, we're just copying the original repository and saving it under our account. The hosting site automatically keeps a reference to the original repo.
