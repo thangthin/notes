@@ -29,7 +29,7 @@ A server is just a program that accepts connections from other programs on the n
 
 When you start a server program, it waits for clients to connect to it — like the demo server waiting for your web browser to ask it for a page. Then when a connection comes in, the server runs a piece of code — like calling a function — to handle each incoming connection. A connection in this sense is like a phone call: it's a channel through which the client and server can talk to each other. Web clients send requests over these connections, and servers send responses back.
 
-## URI
+# URI
 ### Parts of URI
 A web address is also called a **URI** for *Uniform Resource Identifier*. You've seen plenty of these before. From a web user's view, a **URI** is a piece of text that you put into your web browser that tells it what page to go to. From a web developer's view, it's a little bit more complicated.
 
@@ -92,7 +92,7 @@ There are a few other possible parts of a URI. For way more detail than you need
 
 - [https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#Syntax](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#Syntax)
 
-## Hostnames
+# Hostnames
 A full HTTP or HTTPS URI includes the hostname of the web server, like ```www.udacity.com``` or ```www.un.int``` or ```www.cheeseboardcollective.coop``` (my favorite pizza place in the world, in Berkeley CA). A hostname in a URI can also be an IP address: for instance, if you put [http://216.58.194.174/](http://216.58.194.174/) in your browser, you'll end up at Google.
 
 > Why is it called a **host**name? In network terminology, a **host** is a computer on the network; one that could host services.
@@ -133,3 +133,103 @@ For instance, HTTP URIs imply a port number of ```80```, whereas HTTPS URIs impl
 We say that a server "listens on" a port, such as ```80``` or ```8000```. "Listening" means that when the server starts up, it tells its operating system that it wants to receive connections from clients on a particular port number. When a client (such as a web browser) "connects to" that port and sends a request, the operating system knows to forward that request to the server that's listening on that port.
 
 > Why do we use port ```8000``` instead of ```80``` for the demo server? For historical reasons, operating systems only allow the administrator (or root) account to listen on ports below ```1024```. This is fine for production web servers, but it's not convenient for learning.
+
+# HTTP GET requests
+Take a look back at the server logs on your terminal, where the demo server is running. When you request a page from the demo server, an entry appears in the logs with a message like this:
+```
+127.0.0.1 - - [03/Oct/2016 15:45:50] "GET /readme.png HTTP/1.1" 200 -
+```
+Take a look at the part right after the date and time. Here, it says ```"GET /readme.png HTTP/1.1"``` This is the text of the request line that the browser sent to the server. This log entry is the server telling you that it received a request that said, literally, ```GET /readme.png HTTP/1.1```.
+
+This request has three parts.
+
+The word ```GET``` is the **method** or **HTTP verb** being used; this says what kind of request is being made. ```GET``` is the verb that clients use when they want a server to send a resource, such as a web page or image. Later, we'll see other verbs that are used when a client wants to do other things, such as submit a form or make changes to a resource.
+
+```/readme.png``` is the **path** of the resource being requested. Notice that the client does not send the whole URI of the resource here. It doesn't say ```https://localhost:8000/readme.png```. It just sends the path.
+
+Finally, ```HTTP/1.1``` is the **protocol** of the request. Over the years, there have been several changes to the way HTTP works. Clients have to tell servers which dialect of HTTP they're speaking. HTTP/1.1 is the most common version today.
+
+## Exercise: Send a request by hand
+You can use ncat to connect to the demo server and send it an HTTP request by hand. (Make sure the demo server is still running!)
+
+Try it out:
+> I used the command ```ncat 127.0.0.1 8000``` to connect to port 8000.
+> Then I typed out an HTTP request on the next two lines.
+Use ```ncat 127.0.0.1 8000``` to connect your terminal to the demo server.
+
+Then type these two lines:
+```
+GET / HTTP/1.1
+Host: localhost
+```
+After the second line, **press Enter twice**. As soon as you do, the response from the server will be displayed on your terminal. Depending on the size of your terminal, and the number of files the web server sees, you will probably need to **scroll up** to see the beginning of the response!
+
+# HTTP Responses
+Here's another one to try. Use ncat to connect to google.com port 80, and send a request for the path / on the host google.com:
+```
+GET / HTTP/1.1
+Host: google.com
+```
+
+> Make sure to send ```Host: google.com``` exactly ... don't slip a ```www``` in there. These are actually different **hostnames**, and we want to take a look at the difference between them. And **press Enter twice**!
+
+The HTTP response is made up of three parts: the **status line**, some **headers**, and a **response body**.
+
+The status line is the first line of text that the server sends back. The headers are the other lines up until the first blank line. The response body is the rest — in this case, it's a piece of HTML.
+
+## Status line
+In the response you got from your demo server, the status line said ```HTTP/1.0 200 OK```. In the one from Google, it says ```HTTP/1.1 301 Moved Permanently```. The status line tells the client whether the server understood the request, whether the server has the resource the client asked for, and how to proceed next. It also tells the client which dialect of HTTP the server is speaking.
+
+The numbers 200 and 301 here are **HTTP status codes**. There are dozens of different status codes. The first digit of the status code indicates the general success of the request. As a shorthand, web developers describe all of the codes starting with **2** as "**2xx**" codes, for instance — the x's mean "any digit".
+
+- **1xx — Informational**. The request is in progress or there's another step to take.
+- **2xx — Success**! The request succeeded. The server is sending the data the client asked for.
+- **3xx — Redirection**. The server is telling the client a different URI it should redirect to. The headers will usually contain a **Location** header with the updated URI. Different codes tell the client whether a redirect is permanent or temporary.
+- **4xx — Client error**. The server didn't understand the client's request, or can't or won't fill it. Different codes tell the client whether it was a bad URI, a permissions problem, or another sort of error.
+- **5xx — Server error**. Something went wrong on the server side.
+You can find out much more about HTTP status codes in this [Wikipedia article](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) or in the [specification for HTTP](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+
+The server response here is an example of good user interface on the Web. Google wants browsers to use ```www.google.com``` instead of ```google.com```. But instead of showing the user an error message, they send a redirect. Browsers will automatically follow the redirect and end up on the right site.
+
+## Headers
+An HTTP response can include many **headers**. Each header is a line that starts with a keyword, such as ```Location``` or ```Content-type```, followed by a colon and a value. **Headers are a sort of metadata for the response. They aren't displayed by browsers or other clients; instead, they tell the client various information about the response.**
+
+Many, many features of the Web are implemented using headers. For instance, **cookies** are a Web feature that lets servers store data on the browser, for instance to keep a user logged in. To set a cookie, the server sends the ```Set-Cookie``` header. The browser will then send the cookie data back in a ```Cookie``` header on subsequent requests. You'll see more about cookies later in this course.
+
+For the next quiz, take a look at the Content-type header sent by the Google server and the demo server. Both servers send the exact same value:
+```
+Content-type: text/html; charset=utf-8
+```
+What do you think this means?
+The server is telling the cient that the response body is an HTML document written in UTF-8 text.
+
+A ```Content-type``` header indicates the kind of data that the server is sending. It includes a general category of content as well as the specific format. For instance, a PNG image file will come with the Content-type ```image/png```. If the content is text (including HTML), the server will also tell what encoding it's written in. UTF-8 is a very common choice here, and it's the default for Python text anyway.
+
+Very often, the headers will contain more metadata about the response body. For instance, both the demo server and Google also send a ```Content-Length``` header, which tells the client how long (in bytes) the response body will be. If the server sends this, then the client can reuse the connection to send another request after it's read the first response. Browsers use this so they can fetch multiple pieces of data (such as images on a web page) without having to reconnect to the server.
+
+## Response body
+The headers end with a blank line. Everything after that blank line is part of the **response body**. If the request was successful (a ```200 OK``` status, for instance), this is a copy of whatever resource the client asked for — such as a web page, image, or other piece of data.
+
+But in the case of an error, the response body is where the error message goes! If you request a page that doesn't exist, and you get a ```404 Not Found``` error, the actual error message shows up in the response body.
+
+## Exercise: Be a web server!
+Use ```ncat -l 9999``` to listen on port 9999. Connect to it with your web browser at ```http://localhost:9999/```. What do you see in your terminal?
+
+Keep that terminal open!
+
+Next, send an HTTP response to your browser by typing it into the terminal, right under where you see the headers the browser sent to you:
+```
+HTTP/1.1 307 Temporary Redirect
+Location: https://www.eff.org/
+```
+At the end, **press Enter twice** to send a blank line to mark the end of headers.
+
+
+Do it again! Run ```ncat -l 9999``` to play a server, and get your browser to access it. But this time, instead of sending a 307 redirect, send a 200 OK with a piece of text in it:
+```
+HTTP/1.1 200 OK
+Content-type: text/plain
+Content-length: 50
+
+Hello, browser! I am a real HTTP server, honestly!
+```
