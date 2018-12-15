@@ -134,28 +134,111 @@ has different scoping rules than regularly defined `function` definition - more 
 
 ## Destructuring
 - allows to map elements to variables quickly
-```
+```javascript
 var arr = [1,2,3,4]
 var [a, ,b] = arr // a, b gets mapped to first and third element respectively
 ```
 
 - quickly swaps value between variables
-```
+```javascript
 // a => 1 b=> 3
 [a, b] = [b, a]
 // a => 3 b=> 1
 ```
 
 - when local variable name is the same as object property name, quickly destructure like so
-```
+```javascript
 var p1 = {name: "thang", test:"b-"}
 var {name} = p1
 name // "thang"
 ```
 
 - destructure nested sturctures
-```
+```javascript
 let numbers = [[1,2,3],[4,5,6]]
 let [[x,y,z], fourAndAbove] = numbers
 console.log(x,y,z, fourAndAbove) // 1 2 3 [4, 5, 6]
+```
+
+## Export / Importing
+- export default - exports works on all types
+- Note that babel transpiling is needed to transpile es6 module system for node - look at simple node config repo
+```javascript
+// file one
+export default function() {
+    console.log("file one")
+}
+
+// file two
+import mylibrary from './file-one'
+```
+
+- export multiple
+```javascript
+//file one
+export function library() {
+    console.log("file one library")
+}
+
+export function test() {
+    console.log("file one test)
+}
+
+// file two
+import {library, test} from './file-one'
+```
+
+## Classes
+- syntactical sugar for constructor function, helps point method defined in class to prototype but still based on prototype inheritance
+```javascript
+class Person {
+    constructor(name) {
+        this.name = name // assign name to instance
+    }
+
+    // method definition doesn't need function keyword
+    sayName() {
+        console.log(`My name is ${this.name}`);
+    }
+}
+
+let p1 = new Person("Thang")
+p1.sayName() // My name is Thang
+
+var sayName = p1.sayName // assigned function doesn't get automatically binded
+sayName() // My name is undefined
+
+var sayName = p1.sayName.bind(p1) // still have to manually bind if instance is needed
+sayName() // My name is Thang
+```
+
+- Inheritance is a lil easier to write
+```javascript
+class Creature {
+    constructor(name) {
+        this.name = name;
+    }
+
+    sayName() {
+        console.log(`My name is ${this.name}`)
+    }
+}
+
+class Person extends Creature {
+    constructor(name, age) {
+        super(name) // sets parent constructor
+        this.age = age
+    }
+
+    sayAge() {
+        console.log(`My age is ${this.age}`)
+    }
+}
+
+var p1 = new Person("Thang", 1)
+console.log(p1.name) // Thang
+console.log(p1.age) // 1
+p1.sayAge() // My age is 1
+p1.sayName() // My name is Thang
+console.log(p1.sayName === Creature.prototype.sayName) // true
 ```
