@@ -49,6 +49,17 @@ sayName.call(p2)
 sayName.call(ps, [arg2, arg2])
 ```
 
+*** 
+***
+***
+***
+***
+***
+*** 
+***
+***
+***
+***
 ***
 
 # ES6
@@ -164,81 +175,120 @@ console.log(x,y,z, fourAndAbove) // 1 2 3 [4, 5, 6]
 - export default - exports works on all types
 - Note that babel transpiling is needed to transpile es6 module system for node - look at simple node config repo
 ```javascript
-// file one
-export default function() {
-    console.log("file one")
-}
+    // file one
+    export default function() {
+        console.log("file one")
+    }
 
-// file two
-import mylibrary from './file-one'
+    // file two
+    import mylibrary from './file-one'
 ```
 
 - export multiple
 ```javascript
-//file one
-export function library() {
-    console.log("file one library")
-}
+    //file one
+    export function library() {
+        console.log("file one library")
+    }
 
-export function test() {
-    console.log("file one test)
-}
+    export function test() {
+        console.log("file one test")
+    }
 
-// file two
-import {library, test} from './file-one'
+    // file two
+    import {library, test} from './file-one'
 ```
 
 ## Classes
 - syntactical sugar for constructor function, helps point method defined in class to prototype but still based on prototype inheritance
 ```javascript
-class Person {
-    constructor(name) {
-        this.name = name // assign name to instance
+    class Person {
+        constructor(name) {
+            this.name = name // assign name to instance
+        }
+
+        // method definition doesn't need function keyword
+        sayName() {
+            console.log(`My name is ${this.name}`);
+        }
     }
 
-    // method definition doesn't need function keyword
-    sayName() {
-        console.log(`My name is ${this.name}`);
-    }
-}
+    let p1 = new Person("Thang")
+    p1.sayName() // My name is Thang
 
-let p1 = new Person("Thang")
-p1.sayName() // My name is Thang
+    var sayName = p1.sayName // assigned function doesn't get automatically binded
+    sayName() // My name is undefined
 
-var sayName = p1.sayName // assigned function doesn't get automatically binded
-sayName() // My name is undefined
-
-var sayName = p1.sayName.bind(p1) // still have to manually bind if instance is needed
-sayName() // My name is Thang
+    var sayName = p1.sayName.bind(p1) // still have to manually bind if instance is needed
+    sayName() // My name is Thang
 ```
 
 - Inheritance is a lil easier to write
 ```javascript
-class Creature {
-    constructor(name) {
-        this.name = name;
+    class Creature {
+        constructor(name) {
+            this.name = name;
+        }
+
+        sayName() {
+            console.log(`My name is ${this.name}`)
+        }
     }
 
-    sayName() {
-        console.log(`My name is ${this.name}`)
-    }
-}
+    class Person extends Creature {
+        constructor(name, age) {
+            super(name) // sets parent constructor
+            this.age = age
+        }
 
-class Person extends Creature {
-    constructor(name, age) {
-        super(name) // sets parent constructor
-        this.age = age
+        sayAge() {
+            console.log(`My age is ${this.age}`)
+        }
     }
 
-    sayAge() {
-        console.log(`My age is ${this.age}`)
+    var p1 = new Person("Thang", 1)
+    console.log(p1.name) // Thang
+    console.log(p1.age) // 1
+    p1.sayAge() // My age is 1
+    p1.sayName() // My name is Thang
+    console.log(p1.sayName === Creature.prototype.sayName) // true
+```
+## Generators
+- functions that allows you to enter and go out and resume execution with new inputs of the function at a later time
+```javascript
+    function* silly() {
+        yield 0 // yield operates similar to return but it exits and remembers the execution and resumes at the next line when entered again
+        let x = yield 1 // take in input after yielding 1
+        console.log(x) // this doesn't get executed until the next call to sillyInstance
+        return 2
     }
-}
 
-var p1 = new Person("Thang", 1)
-console.log(p1.name) // Thang
-console.log(p1.age) // 1
-p1.sayAge() // My age is 1
-p1.sayName() // My name is Thang
-console.log(p1.sayName === Creature.prototype.sayName) // true
+    let sillyGen = silly() // returns a generator - behaves similar like an iterator in Java
+    console.log(sillGen.next()) // { value: 0, done: false }
+    console.log(sillGen.next()) // { value: 1, done: false }
+    console.log(sillGen.next()) // { value: 2, done: true }
+    console.log(sillGen.next()) // { value: undefined, done: true }
+
+    let sillyGen2 = silly()
+    // can be used with new for-of loop
+    for(let num of sillyGen2) {
+        console.log(num); // 0, 1, input -> gets printed out sequentially
+    }
+
+    // example usage
+    function* fib(limit) {
+        let x = 0
+        let y = 1
+        yield x
+        yield y
+        for (let i = 0; i < limit; i++) {
+            [x,y] = [y, x+y] // definition of fib numbers
+            yield y
+        }
+    }
+
+    // print out the first 10 fib numbers
+    for (let n of fib(10)) {
+        console.log(n);  
+    }
 ```
